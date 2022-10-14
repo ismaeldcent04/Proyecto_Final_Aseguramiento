@@ -76,6 +76,7 @@ export default function MediaCard(props) {
               type="text"
               className="form-control"
               placeholder="Tell us your experience"
+              name="comentario"
             />
             <button type="submit" className="btn btn-primary">
               Submit
