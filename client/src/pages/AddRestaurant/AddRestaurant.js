@@ -113,7 +113,7 @@ function AddRestaurant(props) {
                         class="form-control"
                         name="image"
                         id="name"
-                        placeholder="ex. Pizza-Hut"
+                        placeholder="Img:url.."
                         onChange={handleImage}
                       />
                     </div>

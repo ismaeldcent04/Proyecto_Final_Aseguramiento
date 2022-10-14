@@ -1,12 +1,11 @@
 import React from "react";
-import "../node_modules/bootstrap/dist/css/bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Auth/Login";
 import SignUp from "./Components/Auth/SignUp";
 import MainPage from "./pages/MainPage";
 import AddRestaurant from "./pages/AddRestaurant/AddRestaurant";
-
 function App() {
   return (
     <Router>
