@@ -1,9 +1,9 @@
 import React from 'react'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './Components/Pages/Auth/Login'
-import SignUp from '/Components/Pages/Auth/SignUp'
+import SignUp from './Components/Pages/Auth/SignUp'
 
 function App() {
   return (
