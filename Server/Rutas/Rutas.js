@@ -3,33 +3,33 @@ const router = express.Router();
 
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
-  nombre: String,
+  firstName: String,
+  lastName: String,
   email: String,
-  contraseña: String,
-  idusuario: String,
+  password: String,
+  iduser: String,
 });
 
 const User = mongoose.model("User", userSchema);
 module.exports = router;
 
-router.get("/register", (req, res) => {
+router.get("/sign-up", (req, res) => {
   res.end("Hola esta es la pagina de registro");
 });
 
-router.post("/register", (req, res) => {
+router.post("/sign-up", (req, res) => {
   console.log(req.body.email);
-  res.send(req.body.nombre);
   const newUser = new User({
-    nombre: req.body.nombre,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
-    contraseña: req.body.contraseña,
-    idusuario: req.body.idusuario,
+    password: req.body.password,
   });
   newUser.save(function (err) {
     if (!err) {
-      res.send("Usuario agregado correctamente");
+      console.log("Usuario agregado correctamente");
     } else {
-      res.send(err);
+      res.end(err);
     }
   });
 });
@@ -38,16 +38,15 @@ router.get("/login", (req, res) => {
   res.end("Hola esta es la pagina de login");
 });
 router.post("/login", (req, res) => {
-  const nombre = req.body.nombre;
-  const contraseña = req.body.contraseña;
-  console.log(nombre, contraseña);
+  const email = req.body.email;
+  const password = req.body.password;
 
-  User.findOne({ nombre: nombre }, function (err, foundUser) {
+  User.findOne({ email: email }, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
       if (foundUser) {
-        if (foundUser.contraseña === contraseña) {
+        if (foundUser.password === password) {
           res.send("Usuario existe, entrando al home....");
         } else {
           res.send("Credenciales incorrectas, por favor intenta de nuevo");
