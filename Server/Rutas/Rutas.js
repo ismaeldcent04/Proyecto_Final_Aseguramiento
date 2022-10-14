@@ -19,6 +19,7 @@ router.get("/sign-up", (req, res) => {
 
 router.post("/sign-up", (req, res) => {
   console.log(req.body.email);
+
   const newUser = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -27,7 +28,7 @@ router.post("/sign-up", (req, res) => {
   });
   newUser.save(function (err) {
     if (!err) {
-      console.log("Usuario agregado correctamente");
+      console.log("");
     } else {
       res.end(err);
     }
@@ -40,6 +41,7 @@ router.get("/login", (req, res) => {
 router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  console.log(nombre, contraseña);
 
   User.findOne({ email: email }, function (err, foundUser) {
     if (err) {

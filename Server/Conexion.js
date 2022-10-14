@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/RestauranTReviews");
+mongoose.connect(
+  "mongodb+srv://admin:1234@cluster0.jnho3.mongodb.net/RestaruranTReviews"
+);
 
 const objetobd = mongoose.connection;
 
