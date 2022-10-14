@@ -28,10 +28,11 @@ function MainPage() {
         <SearchBar />
       </div>
       <div className="cards">
-        {restaurantes.map((restaurante) => {
+        {restaurantes.map((restaurante, index) => {
           return (
             <div className="row row-cols g-0 ">
               <Card
+                key={index}
                 image={restaurante.imagen}
                 Restaurantname={restaurante.nombre}
                 RestaurantDescription={restaurante.descripcion}
