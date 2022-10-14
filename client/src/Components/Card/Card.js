@@ -9,12 +9,45 @@ import Rating from "@mui/material/Rating";
 import "./Card.css";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
 export default function MediaCard(props) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value, setValue] = React.useState(2);
+  const [comentario, setcomentario] = useState("");
+  const [reviews, setreview] = useState([]);
+  function handleOpen() {
+    setOpen(true);
+    axios
+      .get("/api/restaurant/review", props.Restaurantname)
+      .then((response) => {
+        console.log(response.data);
+        setreview(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function agregarReview(event) {
+    event.preventDefault();
+
+    const newreview = {
+      nombre: props.Restaurantname,
+      comentario: comentario,
+      puntuacion: value,
+    };
+    console.log(newreview);
+    axios
+      .post("/api/restaurant/review", newreview)
+      .then((res) => {
+        alert(res.data);
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  }
 
   const style = {
     position: "absolute",
@@ -74,34 +107,36 @@ export default function MediaCard(props) {
             </Typography>
             <input
               type="text"
+              value={comentario}
               className="form-control"
               placeholder="Tell us your experience"
               name="comentario"
+              onChange={(event) => {
+                setcomentario(event.target.value);
+              }}
             />
-            <button type="submit" className="btn btn-primary">
+            <button
+              onClick={agregarReview}
+              type="submit"
+              className="btn btn-primary"
+            >
               Submit
             </button>
 
             {/* View Review*/}
-            <Box sx={style2}>
-              <Typography className="reviewheader" variant="h8" component="h2">
-                Reviews
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Anonymous
-              </Typography>
-              <Rating name="read-only" value={4} readOnly />
-              <Typography variant="body2" color="text.secondary">
-                Very good restaurant!
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Anonymous
-              </Typography>
-              <Rating name="read-only" value={2} readOnly />
-              <Typography variant="body2" color="text.secondary">
-                Not my favorite
-              </Typography>
-            </Box>
+            {reviews.map((review) => {
+              return (
+                <Box sx={style2}>
+                  <Typography
+                    className="reviewheader"
+                    variant="h8"
+                    component="h2"
+                  >
+                    {review.comentario}
+                  </Typography>
+                </Box>
+              );
+            })}
           </Box>
         </Modal>
       </CardActions>

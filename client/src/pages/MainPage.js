@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/NavBar/Navbar";
 import Card from "../Components/Card/Card";
 import SearchBar from "../Components/SearchBar/SearchBar";
@@ -18,6 +18,10 @@ function MainPage() {
         console.log(error);
       });
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   fetchData();
   return (
     <div className="Mainpage">
