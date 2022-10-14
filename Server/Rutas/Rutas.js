@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 module.exports = router;
 
+router.get("/home", (req, res) => {
+  res.send("homepage");
+});
+
 router.get("/sign-up", (req, res) => {
   res.end("Hola esta es la pagina de registro");
 });
@@ -48,7 +52,7 @@ router.post("/login", (req, res) => {
     } else {
       if (foundUser) {
         if (foundUser.password === password) {
-          res.send("Usuario existe, entrando al home....");
+          res.send("Credenciales correctas");
         } else {
           res.send("Credenciales incorrectas, por favor intenta de nuevo");
         }

@@ -19,12 +19,13 @@ function Login() {
       email: email,
       password: password,
     };
-    console.log(credentials);
     axios
       .post("/api/restaurant/login", credentials)
       .then((res) => {
-        console.log("login exitoso");
-        navigate("/home");
+        alert(res.data);
+        if (res.data === "Credenciales correctas") {
+          navigate("/home");
+        }
       })
       .then((err) => {
         console.log(err);
