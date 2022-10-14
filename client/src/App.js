@@ -1,25 +1,21 @@
 import React from "react";
-import "react-bootstrap";
-import "./App.css";
+
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./Components/Pages/Auth/Login";
-import SignUp from "./Components/Pages/Auth/SignUp";
-import Home from "./Components/Pages/Home/Home";
+import Login from "./Components/Auth/Login";
+import SignUp from "./Components/Auth/SignUp";
+import MainPage from "./pages/MainPage";
+import AddRestaurant from "./pages/AddRestaurant/AddRestaurant";
 
 function App() {
   return (
     <Router>
-      <div className="app">
-        <div className="App-header">
-          <div className="auth-inner">
-            <Routes>
-              <Route exact path="/" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/home" element={<Home />} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/home" element={<MainPage />} />
+        <Route path="/add-restaurant" element={<AddRestaurant />} />
+      </Routes>
     </Router>
   );
 }

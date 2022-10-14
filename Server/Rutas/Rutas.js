@@ -26,7 +26,7 @@ const restaurantSchema = new mongoose.Schema({
   nombre: String,
   descripcion: String,
   imagen: String,
-  review: reviewtSchema,
+  review: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 });
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
@@ -49,7 +49,7 @@ router.post("/sign-up", (req, res) => {
   });
   newUser.save(function (err) {
     if (!err) {
-      console.log("");
+      console.log("Succesfully added new user");
     } else {
       res.end(err);
     }
@@ -92,22 +92,49 @@ router.get("/restaurant", (req, res) => {
 });
 
 router.post("/restaurant", (req, res) => {
-  res.send("Agregar restaurante");
-});
-
-/*REVIEWS SET obtener los reviews*/
-router.get("/:id", (req, res) => {
-  Restaurant.find({:"Foodlover"}, (err, reviewfound) => {
+  const newrestaurant = new Restaurant({
+    nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
+    imagen: req.body.imagen,
+  });
+  newrestaurant.save(function (err, addedrestaurant) {
     if (err) {
       console.log(err);
     } else {
-      res.send(reviewfound);
+      console.log("restaurante agregado correctamente");
+      res.send(addedrestaurant);
     }
   });
 });
 
+/*REVIEWS SET obtener los reviews*/
+router.get("/review", (req, res) => {
+  Restaurant.findOne({ nombre: req.body.nombre })
+    .populate("review")
+    .exec((err, foundrestaurant) => {
+      res.send(foundrestaurant.review);
+    });
+});
+
 router.post("/review", (req, res) => {
-  res.send("Crear review");
+  const newreview = new Review({
+    comentario: req.body.comentario,
+    puntuacion: req.body.puntuacion,
+  });
+  newreview.save((err) => console.log(err));
+
+  Restaurant.findOne(
+    { nombre: req.body.nombre },
+    function (err, foundrestaurant) {
+      if (err) {
+        console.log(err);
+      } else {
+        foundrestaurant.review.push(newreview);
+        foundrestaurant.save();
+        res.send("se agrego correctamente");
+      }
+    }
+  );
 });
 
 module.exports = router;

@@ -1,0 +1,7 @@
+.Navbar {
+  position: static;
+}
+
+.cards {
+  row-gap: 30px;
+}
