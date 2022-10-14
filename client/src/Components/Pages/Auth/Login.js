@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AuthStyle.css";
 
 function Login() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const navigate = useNavigate();
   function handleEmail(event) {
     setemail(event.target.value);
   }
@@ -23,6 +24,7 @@ function Login() {
       .post("/api/restaurant/login", credentials)
       .then((res) => {
         console.log("login exitoso");
+        navigate("/home");
       })
       .then((err) => {
         console.log(err);
